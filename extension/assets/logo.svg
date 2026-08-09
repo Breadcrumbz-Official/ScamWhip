@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="ScamWhip">
+  <defs>
+    <linearGradient id="sw-lash" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8752a"/>
+      <stop offset="55%" stop-color="#f5b942"/>
+      <stop offset="100%" stop-color="#ffe9b0"/>
+    </linearGradient>
+    <linearGradient id="sw-grip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6b4a2f"/>
+      <stop offset="100%" stop-color="#3a2718"/>
+    </linearGradient>
+  </defs>
+
+  <!-- lash: a settling S-curve, thick at the grip and tapering to the cracker -->
+  <path d="M12 50 C 24 50, 32 43, 35 33 C 38 21, 46 12, 55 16"
+        fill="none" stroke="url(#sw-lash)" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M55 16 C 59 18, 59 24, 54 26"
+        fill="none" stroke="url(#sw-lash)" stroke-width="3.2" stroke-linecap="round"/>
+
+  <!-- cracker + the snap -->
+  <path d="M54 26 l 6 -2 M54 26 l 4 5" stroke="#ffe9b0" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  <g stroke="#fff6dc" stroke-width="2" stroke-linecap="round" opacity="0.9">
+    <path d="M54 26 l 8 -9"/>
+    <path d="M54 26 l 10 3"/>
+    <path d="M54 26 l 1 11"/>
+  </g>
+
+  <!-- grip -->
+  <rect x="4" y="45" width="17" height="10" rx="5" transform="rotate(-9 12.5 50)" fill="url(#sw-grip)"/>
+  <rect x="6.5" y="47.4" width="4" height="5.2" rx="2" transform="rotate(-9 12.5 50)" fill="#8a6440" opacity=".65"/>
+</svg>

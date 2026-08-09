@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Whip — Mail Inspection</title>
+  <link rel="stylesheet" href="pages/dashboard.css" />
+</head>
+<body>
+  <svg class="defs" aria-hidden="true">
+    <filter id="inkTexture" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+    </filter>
+  </svg>
+
+  <div class="sheet">
+    <header class="head">
+      <div>
+        <div class="wordmark">
+          <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>WHIP</span>
+        </div>
+        <div class="tagline">Mail inspection · <span id="version">v0.0.0</span></div>
+      </div>
+      <div class="status-strip">
+        <span class="status" id="statusOverlay"><i></i><span>overlay</span></span>
+        <span class="status" id="statusBackend"><i></i><span>backend</span></span>
+      </div>
+    </header>
+
+    <!-- SETUP ---------------------------------------------------------- -->
+    <section class="card">
+      <h2>Setup</h2>
+
+      <div class="field">
+        <label for="f-token">Pairing code</label>
+        <input id="f-token" type="text" data-path="bridge.token" spellcheck="false"
+               placeholder="paste the code from the whip app" />
+      </div>
+
+      <div class="field">
+        <label for="f-key">Access token</label>
+        <input id="f-key" type="password" data-path="backend.apiKey" spellcheck="false" placeholder="(none)" />
+        <small>Kept on this computer only. This checker's tokens expire after 24
+          hours — press <b>Get a token</b> whenever inspections start failing.</small>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" data-act="register">Get a token</button>
+        <button class="btn btn-secondary" data-act="test">Test the connection</button>
+      </div>
+      <p class="result-line" id="setup-msg"></p>
+    </section>
+
+    <!-- PREFERENCES ---------------------------------------------------- -->
+    <section class="card">
+      <h2>When something is found</h2>
+      <label class="check"><input type="checkbox" data-path="ui.scanOnCrack" />
+        <span><b>Inspect the page when I crack the whip</b></span></label>
+      <label class="check"><input type="checkbox" data-path="ui.showHud" />
+        <span><b>Show the result on the page itself</b></span></label>
+      <label class="check"><input type="checkbox" data-path="ui.notifications" />
+        <span><b>Show a desktop notification</b></span></label>
+    </section>
+
+    <!-- LAST INSPECTION ------------------------------------------------ -->
+    <section class="card" id="last">
+      <h2>Last inspection</h2>
+
+      <div id="last-empty" class="empty">
+        Nothing inspected yet. Crack the whip above.
+      </div>
+
+      <div id="last-body" class="hidden">
+        <div class="scan-target">
+          <span class="from" id="last-from"></span>
+          <span class="subj" id="last-subj"></span>
+        </div>
+
+        <div class="verdict-zone">
+          <div class="stamp" id="last-stamp"></div>
+          <div class="confidence" id="last-conf"></div>
+        </div>
+
+        <div class="flags-head" id="last-flags-head"></div>
+        <div id="last-flags"></div>
+      </div>
+    </section>
+
+    <!-- HISTORY -------------------------------------------------------- -->
+    <section class="card">
+      <h2>Recent inspections</h2>
+      <table class="history">
+        <tbody id="history-body"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="pages/dashboard.js"></script>
+</body>
+</html>

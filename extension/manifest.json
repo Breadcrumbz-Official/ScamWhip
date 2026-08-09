@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "ScamWhip — Crack to Scan",
+  "short_name": "ScamWhip",
+  "version": "0.1.0",
+  "description": "Crack your whip and ScamWhip reads the visible text on the page, sends it to your scam-detection backend, and shows what got flagged.",
+  "minimum_chrome_version": "116",
+
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+
+  "action": {
+    "default_title": "ScamWhip",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+
+  "options_page": "index.html",
+
+  "permissions": [
+    "storage",
+    "scripting",
+    "tabs",
+    "alarms",
+    "notifications",
+    "contextMenus"
+  ],
+
+  "host_permissions": ["http://*/*", "https://*/*"],
+
+  "commands": {
+    "scan-now": {
+      "suggested_key": { "default": "Ctrl+Shift+Y" },
+      "description": "Scan the current page for scam signals"
+    }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/icons/*.png", "assets/logo.svg"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}
