@@ -96,6 +96,4 @@ This is the part that actually draws the whip.
 - **Whip won't crack** — you're probably being too gentle. It's a whip, not a
   fishing rod. Commit to the flick.
 - **Token expired** — go back to the dashboard and click **Get a token** again.
-- **Still stuck** — the `docs/` folder has the deep-dive versions of all of
-  this, including exactly how the extension and overlay talk to each other,
-  in case you want to actually read code instead of taking our word for it.
+- **Still stuck** — contact us on discord but its prob one of the issues listed above
