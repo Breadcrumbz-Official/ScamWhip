@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="12" viewBox="0 0 30 12">
+  <!-- The cracker: the frayed strands at the very end that actually make the
+       noise. Anchored at [0, 0.5] so it starts exactly on the last rope point. -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M0 6 q8 -1.4 15 -3.2" stroke="#e8d3a6" stroke-width="2.6"/>
+    <path d="M0 6 q9 1.2 16 3.4"   stroke="#d8c191" stroke-width="2.2"/>
+    <path d="M14 2.8 q7 -1 14 -2.2" stroke="#f4e6c4" stroke-width="1.5"/>
+    <path d="M15 9.4 q7 .8 14 1.6"  stroke="#efdcb4" stroke-width="1.3"/>
+    <path d="M15 6.2 q8 -.2 15 -.4" stroke="#fff6dc" stroke-width="1"/>
+  </g>
+</svg>

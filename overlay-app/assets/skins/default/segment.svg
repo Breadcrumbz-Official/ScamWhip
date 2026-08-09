@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="8" height="24" viewBox="0 0 8 24" preserveAspectRatio="none">
+  <!--
+    A cross-section of the lash, stretched along each slice of the spline.
+    Detail runs top-to-bottom only: horizontal detail would squash, because a
+    slice can be anywhere from 2 to 40 pixels long depending on the swing.
+  -->
+  <defs>
+    <linearGradient id="leather" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f4dfb6"/>
+      <stop offset="14%"  stop-color="#a97d4a"/>
+      <stop offset="16%"  stop-color="#8a5f33"/>
+      <stop offset="48%"  stop-color="#4a3120"/>
+      <stop offset="72%"  stop-color="#2b1a10"/>
+      <stop offset="92%"  stop-color="#160d07"/>
+      <stop offset="100%" stop-color="#3a2617"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="8" height="24" fill="url(#leather)"/>
+</svg>

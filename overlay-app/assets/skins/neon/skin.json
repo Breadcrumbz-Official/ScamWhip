@@ -1,0 +1,21 @@
+{
+  "name": "Neon",
+  "author": "ScamWhip",
+  "notes": "Second skin, here to prove swapping works. Set appearance.skin to \"neon\" in config/whip.config.json (or in your userData override) and reload — no restart needed.",
+
+  "images": {
+    "segment": "segment.svg",
+    "tip": "tip.svg",
+    "spark": "spark.svg"
+  },
+
+  "colors": {
+    "core": "#0b1e2a",
+    "outline": "#5ef2ff",
+    "glow": "#22d3ee"
+  },
+
+  "segment": { "widthScale": 1.0 },
+  "tip": { "anchor": [0.0, 0.5], "scale": 1.0 },
+  "spark": { "scale": 1.1 }
+}

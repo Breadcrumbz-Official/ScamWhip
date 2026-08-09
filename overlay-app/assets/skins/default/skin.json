@@ -1,0 +1,36 @@
+{
+  "name": "Braided leather",
+  "author": "ScamWhip",
+  "notes": "Every image here is optional. Delete one and the renderer draws that part with vectors instead. Copy this folder, swap the art, then set appearance.skin to the folder name in config/whip.config.json.",
+
+  "images": {
+    "handle": "handle.svg",
+    "segment": "segment.svg",
+    "tip": "tip.svg",
+    "spark": "spark.svg"
+  },
+
+  "colors": {
+    "core": "#2a1a10",
+    "outline": "#f6e4c1",
+    "glow": "#ffcf6b"
+  },
+
+  "handle": {
+    "anchor": [0.82, 0.5],
+    "scale": 1.0
+  },
+
+  "segment": {
+    "widthScale": 1.15
+  },
+
+  "tip": {
+    "anchor": [0.0, 0.5],
+    "scale": 1.0
+  },
+
+  "spark": {
+    "scale": 1.0
+  }
+}

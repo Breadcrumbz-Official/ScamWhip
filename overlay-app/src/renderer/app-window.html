@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;" />
+  <title>ScamWhip</title>
+  <link rel="stylesheet" href="app-window.css" />
+</head>
+<body>
+  <svg class="defs" aria-hidden="true">
+    <filter id="inkTexture" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+    </filter>
+  </svg>
+
+  <div class="sheet">
+    <div class="head">
+      <div>
+        <div class="wordmark">
+          <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>SCAMWHIP</span>
+        </div>
+        <div class="tagline">Overlay &amp; bridge</div>
+      </div>
+      <div class="status-strip">
+        <span class="status" id="statusBridge"><i></i><span>bridge</span></span>
+        <span class="status" id="statusWhip"><i></i><span>whip</span></span>
+      </div>
+    </div>
+
+    <div class="card warn hidden" id="configWarning">
+      <h2>Config problem</h2>
+      <p class="note" id="configWarningText"></p>
+      <div class="actions">
+        <button class="btn btn-secondary" id="btnFixConfig">Open the file</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Status</h2>
+      <div class="stamp-zone">
+        <div class="stamp" id="stampEl">—</div>
+        <div class="stamp-note" id="stampNote"></div>
+      </div>
+      <dl class="facts">
+        <dt>Listening on</dt><dd id="factUrl">—</dd>
+        <dt>Extensions</dt><dd id="factClients">—</dd>
+        <dt>Overlay</dt><dd id="factWhip">—</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>Pairing code</h2>
+      <p class="note">
+        Paste this into the extension — click the ScamWhip toolbar icon, then the
+        gear, then <b>Pairing code</b>. It is what stops anything else on this
+        machine talking to the whip.
+      </p>
+      <div class="code-row">
+        <code id="pairingCode">—</code>
+        <button class="btn btn-primary" id="btnCopy">Copy</button>
+      </div>
+      <p class="result-line" id="copyResult"></p>
+    </div>
+
+    <div class="card">
+      <h2>Controls</h2>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnSpawn">Spawn the whip</button>
+      </div>
+      <p class="note keys" id="hotkeyNote"></p>
+    </div>
+
+    <div class="foot">
+      <span id="versionLine"></span>
+      <span class="foot-actions">
+        <a id="btnClose" role="button" tabindex="0">Close to tray</a>
+        <a id="btnQuit" role="button" tabindex="0" class="danger">Quit ScamWhip</a>
+      </span>
+    </div>
+  </div>
+
+  <script src="app-window.js"></script>
+</body>
+</html>

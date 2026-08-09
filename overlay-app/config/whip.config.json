@@ -1,0 +1,145 @@
+{
+  "//": "ScamWhip overlay config. Edit and save — the app hot-reloads it, no restart. Per-user overrides live in the app's userData folder (tray → Open config folder); anything you put there wins over this file.",
+
+  "window": {
+    "display": "cursor",
+    "alwaysOnTop": true,
+    "//alwaysOnTopLevel": "'floating' keeps the whip above normal windows but below the taskbar and system dialogs. Do not raise this to 'screen-saver' - this window is full-screen and eats clicks while the whip is out, and at that level it would cover the things you need to recover with.",
+    "alwaysOnTopLevel": "floating",
+    "opacity": 1,
+    "clickThrough": true,
+    "hideCursor": false,
+    "debugBorder": false
+  },
+
+  "controls": {
+    "//": "OpenWhip's scheme: tray click spawns the whip at the pointer, the handle follows the mouse, a click drops it and it falls off screen.",
+    "spawnOnTrayClick": true,
+    "dropOnMouseDown": true,
+    "dropButton": "any",
+    "hideOnEscape": true,
+    "globalHotkey": "Control+Shift+J",
+    "crackHotkeyFallback": "",
+    "respawnAfterDropMs": 0,
+
+    "//safety": "The overlay covers the whole screen and swallows clicks while the whip is out, so it must never be able to get stuck there. panicHotkey hides it instantly from the main process, without asking the renderer. maxWhipSeconds is a hard ceiling on how long it can stay on screen.",
+    "panicHotkey": "Control+Alt+W",
+    "maxWhipSeconds": 600000
+  },
+
+  "physics": {
+    "//": "More, shorter links than OpenWhip's 28: a real whip tapers over many segments, and the extra resolution is what lets the loop roll cleanly down the lash instead of snapping in one lump. tipTaper is the important one - the tip link being ~40% of the butt link is what makes the end crack.",
+    "segments": 44,
+    "segmentLength": 15.3,
+    "tipTaper": 0.42,
+    "gravity": 1.2,
+    "gravityDropping": 0.95,
+    "damping": 0.965,
+    "//iterations": "60, not OpenWhip's 20: this chain is 44 links, not 28, and a Gauss-Seidel sweep carries a correction one link per pass. Measured, dropping to 20 costs a real crack (2/3 gestures instead of 3/3) and starts producing false ones.",
+    "iterations": 60,
+    "//maxStretch": "Hard cap on how far a link may stretch. At 1.2 the whole lash visibly grew ~19% longer for a few frames during a crack, which reads as rubbery. 1.05 keeps it looking like leather. Do not go below ~1.03 - the clamp then fights the solver even while the whip just hangs.",
+    "maxStretch": 1.05,
+    "//tipMassRatio": "The tip link weighs this fraction of the butt link. This is what makes a whip crack: momentum running down from the heavy handle has almost no mass left to move at the end, so it arrives as speed. At 1.0 (uniform mass) the whip just flops and never outruns itself.",
+    "tipMassRatio": 0.06,
+    "basePoseSegments": 7,
+    "basePoseStrength": 0.5,
+    "bendLimitHandle": 0.14,
+    "//bendLimitTip": "Max bend per joint at the cracker, radians, applied as a SOFT nudge (see bendStiffness). A hard snap-to-limit fights the distance constraints: on a hanging whip it straightens the lash, drags it bar-taut and pins every segment at maxStretch within four frames.",
+    "bendLimitTip": 0.6,
+    "//bendStiffness": "How much of a joint's overshoot the limiter takes back per pass. One number for every joint - OpenWhip tapers this 0.8 down to 0.12 along the lash, which measured worse here on every count (chatter 69 -> 116, plus false cracks). bendLimitTip already tapers the limit itself.",
+    "bendStiffness": 0.6,
+    "spawnCurl": -0.05,
+    "//presettleSteps": "Physics steps run at spawn, before the first frame is drawn, so the whip appears already hanging and is crack-ready immediately. Set to 0 to watch it uncoil instead.",
+    "presettleSteps": 110,
+    "//stability": "maxHandleStepPx bounds how far the grip may move in one step: a fast flick moves the mouse 80px between frames, several links at once, and no number of constraint passes absorbs a jump that size - the rope snaps taut and spasms. velocitySmoothing blends each point velocity slightly toward its neighbours, cancelling the alternating chatter that makes a sharp loop look like the whip is colliding with itself; it was left at 0, i.e. switched off, which is what made the whip freak out. 0.08 measures 100 chatter reversals down to 69 on tools/physics-bench.js with every crack still landing. Do not raise it much - at 0.25 the smoothing itself starts ringing, and by 0.4 it eats the crack. There is deliberately no per-point speed cap: a crack IS the tip travelling 250-400px in a frame.",
+    "maxHandleStepPx": 130,
+    "velocitySmoothing": 0.08,
+    "//walls": "There are deliberately none. OpenWhip slaps the lash off the screen edges; tried here it was catastrophic - the lash pins against an edge, the bounce fights the distance constraints, and the bench went from 3/3 cracks and 116 chatter reversals to 0/3 and 750. The lash is allowed to leave the screen.",
+    "despawnBelowPx": 60,
+    "handle": {
+      "baseAngle": -1.12,
+      "spring": 0.7,
+      "angularDamping": 0.78,
+      "aimByMouseX": 0.4,
+      "aimByMouseY": 0.2,
+      "aimScale": 0.025,
+      "maxAim": 1.5
+    }
+  },
+
+  "crack": {
+    "//": "A crack must clear BOTH gates: an absolute floor (tipSpeed, px/frame at 60fps) and a spike relative to how the whip has recently been moving (spikeRatio x its own rolling average). The floor alone cannot work - a hanging whip tip legitimately moves fast. The ratio alone fires on any twitch from a standstill. Measured on this config, peak tip speed by gesture - still 5, reading 51, small circles 53, nudging 66, fast drag 84, scroll+reposition 137 (loudest gesture that must stay silent) | deliberate flick 299, flick-to-top 264 (weakest real crack), hard snap 389, full-arm 399. The floor sits at the midpoint of that gap.",
+    "tipSpeed": 255,
+    "spikeRatio": 1.7,
+    "speedWindow": 3,
+    "baselineAlpha": 0.04,
+    "cooldownMs": 350,
+    "graceMs": 400,
+    "//minExtension": "0 on purpose: the tip is often near the handle at the exact moment of a crack, because that is the loop rolling over.",
+    "minExtension": 0,
+    "strengthCeiling": 330
+  },
+
+  "appearance": {
+    "skin": "default",
+    "useImages": true,
+    "colors": {
+      "core": "#2a1a10",
+      "outline": "#f6e4c1",
+      "glow": "#ffcf6b"
+    },
+    "lineWidthHandle": 7,
+    "lineWidthTip": 5,
+    "handleBoost": 2,
+    "outlineWidth": 3,
+    "glow": 14,
+    "splineSamples": 4,
+
+    "//perf": "This canvas is the size of your whole desktop and redraws every frame. maxPixelRatio caps the backing store (a whip does not need 4K). widthBands is how many constant-width strokes the taper is drawn with - raising it costs real time for almost no visible gain. adaptiveQuality drops the glow, then the trail, then curve smoothness if frames run over frameBudgetMs.",
+    "maxPixelRatio": 1.5,
+    "widthBands": 10,
+    "adaptiveQuality": true,
+    "frameBudgetMs": 10,
+    "trail": { "enabled": true, "length": 14, "width": 3.5, "alpha": 0.3 },
+    "flash": { "enabled": true, "radius": 260, "alpha": 0.5, "durationMs": 220 },
+    "sparks": { "enabled": true, "count": 26, "speed": 9, "life": 520, "size": 3, "gravity": 0.25 },
+    "shockwave": { "enabled": true, "durationMs": 420, "maxRadius": 230, "width": 3 },
+    "verdictTint": true
+  },
+
+  "sound": {
+    "//": "Any audio file sitting in assets/sounds/ is played, as recorded - no pitch shift, no reverb, no synth layered on top. Drop files in, they are in the rotation; delete them all and the built-in synthesised crack takes over. Supported: wav, mp3, ogg, m4a, aac, flac, opus.",
+    "enabled": true,
+    "volume": 0.85,
+    "//files": "Leave empty to use everything in assets/sounds/. Name files here to use only those, in that order.",
+    "files": [],
+    "//playback": "These only affect recorded files. scaleWithStrength makes a harder crack louder; pitchJitterFiles re-pitches each hit (off by default - that is processing, and you asked for as-is); panning follows the whip tip across the screen.",
+    "scaleWithStrength": true,
+    "pitchJitterFiles": false,
+    "panning": true,
+    "//synth": "Used only when there are no sound files at all.",
+    "pitchJitter": 0.18,
+    "reverb": 0.35,
+    "impactThump": true,
+    "//whoosh": "The swish while you swing - synthesised, independent of the crack sounds. Set enabled false for silence between cracks.",
+    "whoosh": { "enabled": true, "maxGain": 0.22, "minSpeed": 25 }
+  },
+
+  "bridge": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 17311,
+    "requireToken": true,
+    "allowUnauthenticated": false
+  },
+
+  "hud": {
+    "//showAppWindowOnStart": "Open the ordinary application window (status, pairing code, controls) at launch. Set false to start straight into the tray, in which case showStartupNotice puts up a notification instead so you can tell the app started at all.",
+    "showAppWindowOnStart": true,
+    "showStartupNotice": true,
+    "showPairingOnStart": true,
+    "showVerdict": true,
+    "verdictMs": 5000,
+    "showDebug": false
+  }
+}

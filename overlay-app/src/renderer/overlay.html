@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ScamWhip overlay</title>
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+  <canvas id="whip"></canvas>
+
+  <div class="card" id="hud-pairing">
+    <div class="card-row">
+      <span class="badge">ScamWhip</span>
+      <span class="card-title">Pair the extension</span>
+    </div>
+    <div class="card-row">
+      <code id="pairing-code">—</code>
+      <button id="pairing-copy" class="mini">copy</button>
+    </div>
+    <small id="hud-bridge">starting the bridge…</small>
+    <small class="dim">Extension → dashboard → Whip &amp; overlay → Pairing code</small>
+  </div>
+
+  <div class="hint" id="hud-hint">Esc to put it away</div>
+  <div class="debug" id="hud-debug"></div>
+
+  <script src="whip/physics.js"></script>
+  <script src="whip/skin.js"></script>
+  <script src="whip/render.js"></script>
+  <script src="whip/audio.js"></script>
+  <script src="whip/app.js"></script>
+</body>
+</html>

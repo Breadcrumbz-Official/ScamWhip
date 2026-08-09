@@ -1,0 +1,149 @@
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font: 12px/1.45 ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+  color: #ececf1;
+  user-select: none;
+}
+
+body.hide-cursor { cursor: none; }
+body.debug-border { outline: 2px dashed rgba(245, 185, 66, .5); outline-offset: -2px; }
+
+#whip {
+  position: fixed;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+html.preview body {
+  background:
+    radial-gradient(1200px 700px at 70% 15%, #23232c 0%, #131318 55%, #0c0c10 100%);
+}
+html.preview body::after {
+  content: "preview mode — click to spawn, click again to drop, Esc to clear";
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: rgba(255, 255, 255, .38);
+  pointer-events: none;
+}
+
+/* HUD cards */
+.card {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  min-width: 230px;
+  display: none;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 15px;
+  border-radius: 13px;
+  background: rgba(20, 20, 25, .93);
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .55);
+  backdrop-filter: blur(9px);
+  pointer-events: auto;
+}
+.card.on { display: flex; }
+.card.paired { display: none; }
+
+.card-row { display: flex; align-items: center; gap: 8px; }
+.card-title { font-size: 12.5px; font-weight: 620; }
+.badge {
+  font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: #241a06; background: linear-gradient(180deg, #f7c65c, #e5a52c);
+  padding: 2px 6px; border-radius: 5px;
+}
+code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 14px; letter-spacing: .12em; font-weight: 600; color: #f5b942;
+  background: rgba(245, 185, 66, .1);
+  border: 1px solid rgba(245, 185, 66, .25);
+  border-radius: 7px; padding: 5px 9px; flex: 1;
+  user-select: all;
+}
+.mini {
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .07);
+  color: inherit; font: inherit; font-size: 10.5px; font-weight: 600;
+  border-radius: 7px; padding: 5px 9px; cursor: pointer;
+}
+.mini:hover { background: rgba(255, 255, 255, .14); }
+.card small { font-size: 10.5px; color: #9a9aa6; }
+.card small.dim { color: #6d6d78; }
+
+/* verdict toast */
+.verdict {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translate(-50%, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 460px;
+  padding: 12px 18px;
+  border-radius: 13px;
+  background: rgba(20, 20, 25, .95);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-left: 4px solid #8b8b95;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s cubic-bezier(.16, 1, .3, 1);
+}
+.verdict.on { opacity: 1; transform: translate(-50%, 0); }
+.verdict b { font-size: 14px; font-weight: 660; }
+.verdict span { font-size: 11.5px; color: #b7b7c2; }
+.verdict small { font-size: 11px; color: #8b8b95; max-width: 100%; }
+.verdict.scam { border-left-color: #ff5c62; }
+.verdict.scam b { color: #ff5c62; }
+.verdict.suspicious { border-left-color: #f5b942; }
+.verdict.suspicious b { color: #f5b942; }
+.verdict.clean { border-left-color: #3fbf6f; }
+.verdict.clean b { color: #3fbf6f; }
+
+/* hint + debug */
+.hint {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: .03em;
+  color: rgba(255, 255, 255, .4);
+  background: rgba(0, 0, 0, .35);
+  padding: 5px 12px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .2s ease, color .2s ease;
+  pointer-events: none;
+}
+.hint.on { opacity: 1; }
+
+.debug {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  display: none;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 10.5px;
+  color: rgba(245, 185, 66, .75);
+  background: rgba(0, 0, 0, .45);
+  padding: 5px 10px;
+  border-radius: 7px;
+  pointer-events: none;
+}
+.debug.on { display: block; }

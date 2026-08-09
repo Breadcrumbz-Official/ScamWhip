@@ -1,0 +1,64 @@
+{
+  "name": "scamwhip-overlay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Physics whip overlay for ScamWhip — crack it to make the browser extension scan the page you're reading.",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "bridge": "node ../tools/bridge-sim.js",
+    "preview": "node ../tools/preview-server.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "whip",
+    "overlay",
+    "electron",
+    "scam",
+    "phishing"
+  ],
+  "license": "MIT",
+  "author": "ScamWhip",
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "dev.scamwhip.overlay",
+    "productName": "ScamWhip",
+    "files": [
+      "src/**/*",
+      "config/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/appicon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ScamWhip"
+    },
+    "portable": {
+      "artifactName": "ScamWhip-${version}-portable.exe"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/appicon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/appicon.png"
+    }
+  }
+}
