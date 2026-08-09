@@ -18,7 +18,6 @@ crack, and a browser extension that reads the page and shows you the
 verdict. One WebSocket, zero cloud dependency between them, and an
 unreasonable amount of effort spent making rope physics not explode.
 
----
 
 ## Setup instructions (for judges, the impatient, and the mildly suspicious)
 
